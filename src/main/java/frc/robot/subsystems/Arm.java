@@ -4,12 +4,24 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
+public class Arm extends SubsystemBase {
+
+  private final CANSparkMax m_ArmMotor;
+
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public Arm() {
+
+    m_ArmMotor = new CANSparkMax(6,MotorType.kBrushless);
+    
+  }
 
   /**
    * Example command factory method.
@@ -30,14 +42,24 @@ public class ExampleSubsystem extends SubsystemBase {
    *
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
-  public boolean exampleCondition() {
+  public double armPosition() {
     // Query some boolean state, such as a digital sensor.
-    return false;
+    return m_ArmMotor.getEncoder().getPosition();
+  }
+
+  public void setArmPower(double power){
+    m_ArmMotor.set(power);
+    if(m_ArmMotor.getEncoder().getPosition()<0){
+      Math.max(0,power);
+    }else if(m_ArmMotor.getEncoder().getPosition()>100){
+      Math.min(0,power);
+    }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("arm encoder", m_ArmMotor.getEncoder().getPosition());
   }
 
   @Override
