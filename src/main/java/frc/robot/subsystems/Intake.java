@@ -10,7 +10,9 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.intakeIn;
 
 public class Intake extends SubsystemBase {
 
@@ -20,21 +22,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     m_intakeMotor = new CANSparkMax(20,MotorType.kBrushless);
-    
-  }
-
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public Command exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
+    m_intakeMotor.getEncoder().setPosition(0);
   }
 
   /**
@@ -55,7 +43,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("arm encoder", m_intakeMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("intake encoder", m_intakeMotor.getEncoder().getPosition());
   }
 
   @Override

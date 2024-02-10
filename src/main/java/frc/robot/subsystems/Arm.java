@@ -20,7 +20,7 @@ public class Arm extends SubsystemBase {
   public Arm() {
 
     m_ArmMotor = new CANSparkMax(6,MotorType.kBrushless);
-    
+    m_ArmMotor.getEncoder().setPosition(0);
   }
 
   /**
