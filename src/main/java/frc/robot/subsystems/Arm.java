@@ -48,12 +48,13 @@ public class Arm extends SubsystemBase {
   }
 
   public void setArmPower(double power){
-    m_ArmMotor.set(power);
+    
     if(m_ArmMotor.getEncoder().getPosition()<0){
-      Math.max(0,power);
+      power=Math.max(0,power);
     }else if(m_ArmMotor.getEncoder().getPosition()>100){
-      Math.min(0,power);
+      power=Math.min(0,power);
     }
+    m_ArmMotor.set(power);
   }
 
   @Override
