@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,12 +18,13 @@ import frc.robot.commands.intakeIn;
 public class Intake extends SubsystemBase {
 
   private final CANSparkMax m_intakeMotor;
-
+DigitalInput notedetector;
   /** Creates a new ExampleSubsystem. */
   public Intake() {
 
     m_intakeMotor = new CANSparkMax(20,MotorType.kBrushless);
     m_intakeMotor.getEncoder().setPosition(0);
+notedetector = new DigitalInput(0);
   }
 
   /**
@@ -44,6 +46,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("intake encoder", m_intakeMotor.getEncoder().getPosition());
+     SmartDashboard.putBoolean("note detector", notedetector.get());
   }
 
   @Override
