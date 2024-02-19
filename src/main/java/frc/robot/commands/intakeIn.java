@@ -26,7 +26,11 @@ public class intakeIn extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.setIntakeSpeed(0.1);
+    if(!m_intake.hasNote()){
+      //only start motor if there is no note
+      m_intake.setIntakeSpeed(0.1);
+    }
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,6 +46,7 @@ public class intakeIn extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    
+    return m_intake.hasNote();
   }
 }

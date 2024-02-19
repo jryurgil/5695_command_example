@@ -42,6 +42,12 @@ notedetector = new DigitalInput(0);
 
   }
 
+  public boolean hasNote(){
+    //detector reads true when not blocked, false when not is in place
+    //method returns true when a note is in the beam
+    return !notedetector.get();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
