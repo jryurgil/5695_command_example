@@ -4,10 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,12 +19,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Arm extends SubsystemBase {
 
   private final CANSparkMax m_ArmMotor;
+  private SparkPIDController armPID;
+  private ShuffleboardTab tab = Shuffleboard.getTab("SmartDashboard");
+  private GenericEntry newP = tab.add("newP", 0).getEntry();
+private GenericEntry target = tab.add("target", 0).getEntry();
 
   /** Creates a new ExampleSubsystem. */
   public Arm() {
 
     m_ArmMotor = new CANSparkMax(6,MotorType.kBrushless);
     m_ArmMotor.getEncoder().setPosition(0);
+    armPID = m_ArmMotor.getPIDController();
   }
 
   /**
@@ -57,10 +66,19 @@ public class Arm extends SubsystemBase {
     m_ArmMotor.set(power);
   }
 
+public void setArmTarget(double target){
+armPID.setReference(target,CANSparkBase.ControlType.kPosition);
+}
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("arm encoder", m_ArmMotor.getEncoder().getPosition());
+     SmartDashboard.putNumber("arm P",armPID.getP());
+       SmartDashboard.putNumber("arm I",armPID.getI());
+      armPID.setP(newP.getDouble(0));
+     // armPID.setReference(target.getDouble(0),CANSparkBase.ControlType.kPosition);
+
   }
 
   @Override

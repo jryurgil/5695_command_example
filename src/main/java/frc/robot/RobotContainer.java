@@ -37,7 +37,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    robotArm.setDefaultCommand(new RunCommand(()->robotArm.setArmPower(m_driverController.getLeftY()),robotArm));
+    //robotArm.setDefaultCommand(new RunCommand(()->robotArm.setArmPower(m_driverController.getLeftY()),robotArm));
   }
 
   /**

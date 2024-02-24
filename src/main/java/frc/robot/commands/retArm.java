@@ -26,7 +26,7 @@ public class retArm extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_arm.setArmPower(-0.1);
+    m_arm.setArmTarget(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,12 +36,12 @@ public class retArm extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_arm.setArmPower(0);
+   
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_arm.armPosition()<0;
+    return false;
   }
 }
